@@ -1,5 +1,7 @@
 import asyncio
 import json
+from datetime import datetime
+
 import boto3
 import discord
 import requests
@@ -53,9 +55,10 @@ async def handle_files(discord_client):
             # Fetch the modifiedTime from GDrive API
             # Authorize the request with API key
             gdrive_req = requests.get(f'https://www.googleapis.com/drive/v3/files/{file_id}',
-                                      params={'fields': 'name,modifiedTime', 'key': str(drive_key)}).json()
+                                      params={'fields': 'name,modifiedTime,webViewLink', 'key': str(drive_key)}).json()
             print(str(gdrive_req))
             file_name = gdrive_req['name']
+            file_link = gdrive_req['webViewLink']
             real_last_updated_time = gdrive_req['modifiedTime']
 
             # Do notifications if the saved and real last updated time differ
@@ -63,13 +66,19 @@ async def handle_files(discord_client):
                 # Temporarily write the new time to the data inside this script...
                 given_file_in_data['last_updated'] = real_last_updated_time
 
+                # # Build a little embed
+                # embed = discord.Embed(title="File updated!",
+                #                       description=f"File {file_name} was updated! See timestamp below or click to open in Drive.",
+                #                       url=f"{file_link}")
+                # embed.timestamp = datetime.fromisoformat(real_last_updated_time)
+
                 # Push the notifications to Discord
                 for user in users_to_notify:
                     print(f"Now notifying {user} for {file_id}")
                     try:
                         dest_user = await discord_client.fetch_user(int(user))
                         # Send the message to user
-                        await dest_user.send(f'File {file_name} was updated at {real_last_updated_time}!')
+                        await dest_user.send("blahblah")
                     except Exception as e:
                         print(e)
             else:
