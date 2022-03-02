@@ -55,7 +55,9 @@ async def handle_files(discord_client):
             # Fetch the modifiedTime from GDrive API
             # Authorize the request with API key
             gdrive_req = requests.get(f'https://www.googleapis.com/drive/v3/files/{file_id}',
-                                      params={'fields': 'name,modifiedTime,webViewLink', 'key': str(drive_key)}).json()
+                                      params={'fields': 'name,modifiedTime,webViewLink', 'key': str(drive_key),
+                                              'supportsAllDrives': True},
+                                      headers={'Pragma': 'No-Cache', 'Cache-Control': 'No-Cache'}).json()
             print(str(gdrive_req))
             file_name = gdrive_req['name']
             file_link = gdrive_req['webViewLink']
@@ -78,7 +80,8 @@ async def handle_files(discord_client):
                     try:
                         dest_user = await discord_client.fetch_user(int(user))
                         # Send the message to user
-                        await dest_user.send("blahblah")
+                        await dest_user.send(
+                            f"The file {file_name} was updated at {real_last_updated_time}. [Click here]({file_link})")
                     except Exception as e:
                         print(e)
             else:
