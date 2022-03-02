@@ -56,7 +56,8 @@ def lambda_handler(event, context):
                 # Push the notifications to Discord
                 for user in users_to_notify:
                     try:
-                        await discord_client.get_user(int(user)).send(f'File {file_name} was updated at {real_last_updated_time}!')
+                        user = discord_client.get_user(int(user))
+                        discord_client.loop.create_task(user.send(f'File {file_name} was updated at {real_last_updated_time}!'))
                     except Exception as e:
                         print(e)
     finally:
