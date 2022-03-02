@@ -81,7 +81,7 @@ async def handle_files(discord_client):
                         dest_user = await discord_client.fetch_user(int(user))
                         # Send the message to user
                         await dest_user.send(
-                            f"The file {file_name} was updated at {real_last_updated_time}. [Click here]({file_link})")
+                            f"The file **{file_name}** was updated at **{real_last_updated_time}**. Click here: {file_link}")
                     except Exception as e:
                         print(e)
             else:
