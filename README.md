@@ -25,3 +25,7 @@ Must allow the Lambda instance role to touch our SSM parameters. This IAM policy
     ]
 }
 ```
+
+## Lambda function trigger
+
+Create an EventBridge trigger with some cron expression (e.g. every 30 seconds) to automatically call the script.
