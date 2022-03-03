@@ -10,7 +10,7 @@ import requests
 # Input GDrive file IDS
 files_to_monitor = ['1GIxbI86LPfyURo-DySauYoeKqj1k-H2nedzTeDnHD58', '1VA01N-2lEYn1EITXmk89CNfGJovwaTXR']
 # Input Discord user IDS
-users_to_notify = ['189502176815480832']
+users_to_notify = ['189502176815480832', '561651633507926036']
 
 # END CONFIGURATION
 
